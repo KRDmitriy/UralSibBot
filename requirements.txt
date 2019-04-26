@@ -1,1 +1,1 @@
-pytelegrambotapi
+pytelegrambotapi==3.6.6
