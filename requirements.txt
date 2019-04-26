@@ -1,2 +1,2 @@
-pytelegrambotapi
+pytelegrambotapi==2.2.3
 telebot
