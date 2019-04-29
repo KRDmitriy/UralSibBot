@@ -49,7 +49,7 @@ def set_request_keyboard():
         keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
         #button_phone = types.KeyboardButton(text="Отправить номер телефона", request_contact=True)
         button_geo = types.KeyboardButton(text="Отправить местоположение", request_location=True)
-        button_cancel = types.KeyboardButton(text="Отмена")
+        button_cancel = types.KeyboardButton(text="Назад")
         #keyboard.add(button_phone, button_geo, button_cancel)
         keyboard.add(button_geo, button_cancel)
         return keyboard
@@ -60,13 +60,18 @@ def set_request_keyboard():
 def set_choose_action_keyboard():
     try:
         keyboard = telebot.types.ReplyKeyboardMarkup()
+        """
         keyboard.row('Оплата интернета', 'Оплата телефона')
         keyboard.row('Оплата ЖКХ', 'Оплата телевидения')
         keyboard.row('Оплата обучения', 'Оплата штрафов')
         keyboard.row('Оплата налогов', 'Оплата телевидения')
         keyboard.row('Получение депозита (RUB)', 'Получение депозита (USD)')
         keyboard.row('Получение депозита (EUR)', 'Получение кредита')
-        keyboard.row('Отмена')
+        keyboard.row('Назад')
+        """
+        for i in range(9):
+            keyboard.row('{0}:00'.format(i + 9), '{0}:30'.format(i + 9))
+        keyboard.row('18:00', 'Назад')
         return keyboard
 
     except:
@@ -79,7 +84,7 @@ def set_rate_keyboard():
         keyboard.row('Просто огонь!')
         keyboard.row('Посоветую друзьям :) ')
         keyboard.row('Есть куда расти...')
-        keyboard.row('Отмена')
+        keyboard.row('Назад')
         return keyboard
 
     except:

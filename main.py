@@ -2,7 +2,7 @@ import telebot, actions, keyboards, requests, json
 from telebot import types
 from message_handler import message_handler
 
-bot = telebot.TeleBot("810876165:AAGhtlJ9ALfIII82Hx2V0-HvbXQLmUA71Ls")
+bot = telebot.TeleBot("")
 
 @bot.message_handler(commands=['start'])
 def start_message(message):

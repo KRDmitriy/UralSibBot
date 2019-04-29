@@ -7,6 +7,10 @@ def message_handler(message, mes=''):
                 'оплата обучения', 'оплата штрафов', 'оплата налогов', 'оплата телевидения',
                 'получение депозита (rub)', 'получение депозита (usd)', 'получение депозита (eur)', 'получение кредита']
 
+        times = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30',
+                 '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00',
+        ]
+
         command_list = {
             "find":"bank", "bank":"bank", "find bank":"bank", "банк":"bank",
             "найти банк":"bank", "ближайший":"bank", ",ближайший банк":"bank",
@@ -52,7 +56,7 @@ def message_handler(message, mes=''):
             actions.get_user_data(message)
 
         elif mes == 'получить талон' or mes == '/ticket' or mes == 'ticket':
-            main.bot.send_message(message.chat.id, 'Выберите причину обращения', reply_markup=keyboards.set_choose_action_keyboard())
+            main.bot.send_message(message.chat.id, 'Выберите планируемое время обращения:', reply_markup=keyboards.set_choose_action_keyboard())
 
             answer = main.connnect_to_db("SELECT * FROM UserSession WHERE ChatID={0}".format(message.chat.id))
 
@@ -78,7 +82,7 @@ def message_handler(message, mes=''):
         elif mes[:4] == 'kod:':
             actions.check_ticket(mes, message.chat.id)
 
-        elif mes in commands:
+        elif mes in times:
             
             answer = main.connnect_to_db("SELECT * FROM UserSession WHERE ChatID={0}".format(message.chat.id))
 
@@ -93,8 +97,8 @@ def message_handler(message, mes=''):
         elif mes in command_list.keys():
             message_handler(message, command_list[mes])
 
-        elif mes == 'отмена':
-            main.bot.send_message(message.chat.id, 'Действие отменено ',
+        elif mes == 'назад':
+            main.bot.send_message(message.chat.id, 'Действие отменено',
                 reply_markup=keyboards.main_keyboard())
 
         else:

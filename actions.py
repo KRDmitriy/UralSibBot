@@ -2,6 +2,7 @@ import telebot
 from telebot import types
 import main, keyboards, requests, sqlite3, json
 from MapsAndUsers import RunPrograme, RunProgramWithThreeBanks
+import qrcode, io
 
 def help(chat_id):
     try:
@@ -27,8 +28,10 @@ def redirect_to(link_type, message):
     try:
         if link_type == 'app':
             keyboard = types.InlineKeyboardMarkup()
-            url_button = types.InlineKeyboardButton(text="Приложение на iOS", url="https://itunes.apple.com/ru/app/мобильный-банк-уралсиб/id808733030?mt=8")
-            keyboard.add(url_button)
+            ios_button = types.InlineKeyboardButton(text="Приложение на iOS", url="https://itunes.apple.com/ru/app/мобильный-банк-уралсиб/id808733030?mt=8")
+            keyboard.add(ios_button)
+            droid_button = types.InlineKeyboardButton(text="Приложение на Android", url="https://play.google.com/store/apps/details?id=ru.bankuralsib.mb.android")
+            keyboard.add(droid_button)
             main.bot.send_message(message.chat.id, "Ссылка на приложение", reply_markup=keyboard)
         elif link_type == 'site':
             keyboard = types.InlineKeyboardMarkup()
@@ -77,7 +80,7 @@ def check_ticket(message, chat_id):
             else:
                 main.bot.send_message(chat_id, 'Вы уже оценили это посещение!', reply_markup=keyboards.main_keyboard())
         else:
-            main.bot.send_message(chat_id, 'Некорректный талон', reply_markup=keyboards.main_keyboard())
+            main.bot.send_message(chat_id, 'Некорректный код оценки талон', reply_markup=keyboards.main_keyboard())
 
     except:
         pass
@@ -170,7 +173,7 @@ def create_ticket(message, id, address):
 
             data = json.loads(answer.text)
             id = data["ID"]
-            info = str('Талон № ' + str(id) + ' получен! Офис расположен по адресу ' + office_address + '. Цель посещения: ' + reason +'.')
+            info = str('Талон № ' + str(id) + ' получен! Офис расположен по адресу ' + office_address + '. Время посещения: ' + reason +'.')
 
             main.bot.send_message(message.chat.id, info, reply_markup=keyboards.main_keyboard())
 
@@ -183,6 +186,17 @@ def create_ticket(message, id, address):
             main.bot.send_message(message.chat.id, 'Используйте этот код: ' + code + ' для оценки оказанной услуги с помощью функции /rate', reply_markup=keyboards.main_keyboard())
 
             answer = main.post_to_db("UPDATE UserSession SET IsTicket=0 where ChatId={0}".format(message.chat.id))
+
+            #Неудачная попытка отправлять QR-код с номером купона
+            """text = str(id)
+            img = qrcode.make(text)
+            io_data = io.BytesIO()
+            img.save(io_data, 'png')
+            data = io_data.getvalue()
+            with open('qr_code.png', 'wb') as f:
+                f.write(data)
+
+            main.bot.send_photo(message.chat.id, final_img)"""
     
     except:
         pass
