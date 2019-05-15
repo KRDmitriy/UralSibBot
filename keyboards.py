@@ -1,6 +1,7 @@
 import telebot
 from telebot import types
 
+#Клавиатура-чат по умолчанию
 def main_keyboard():
     try:
         keyboard = telebot.types.ReplyKeyboardMarkup()
@@ -13,6 +14,7 @@ def main_keyboard():
     except:
         pass
 
+#Клавиатура-сообщение с кнопками Да и Нет
 def set_YN_keyboard(def_name):
     try:
         keyboard = types.InlineKeyboardMarkup() #наша клавиатура
@@ -24,7 +26,7 @@ def set_YN_keyboard(def_name):
     
     except:
         pass
-
+#Клавиатура-сообщение с цифрами (Нормально работает с 1-5. Больше и меньше не проверял)
 def set_NUM_keyboard(def_name, count):
     try:
         keyboard = types.InlineKeyboardMarkup()
@@ -43,7 +45,7 @@ def set_NUM_keyboard(def_name, count):
 
     except:
         pass
-
+#Клавиатура-чат с запросами местоположения (можно разкомментировать запрос на телефон)
 def set_request_keyboard():
     try:
         keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
@@ -57,6 +59,7 @@ def set_request_keyboard():
     except:
         pass
 
+#Клавиатура-чат с действиями (сейчас это время с 9:00 до 18:00 с интервалом в полчаса) 
 def set_choose_action_keyboard():
     try:
         keyboard = telebot.types.ReplyKeyboardMarkup()
@@ -77,6 +80,7 @@ def set_choose_action_keyboard():
     except:
         pass
 
+#Клавиатура-чат для оценки
 def set_rate_keyboard():
     try:
         keyboard = telebot.types.ReplyKeyboardMarkup()
